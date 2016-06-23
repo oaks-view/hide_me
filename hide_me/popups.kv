@@ -1,0 +1,53 @@
+<Convert>:
+   pos_hint: {'center_x':.5, 'center_y':.5}
+   size_hint: .8,.4
+   auto_dismiss: False
+   on_open:
+      #self.load()
+   loading:loading
+   progress:progress
+   status: status
+   
+   BoxLayout:
+      pos: root.pos
+      canvas.before:
+         Color:
+            rgba: 1,1,1,1
+         Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'icons/olivine.png'
+      orientation: 'vertical'
+      Label:            #STATUS 20 PERCENT
+         text: 'Converting file...'
+         id: status
+         size_hint: 1,.2
+      RelativeLayout:    #picture or rolling 60 %
+         size_hint: 1,.6
+         id: progress
+         Label:      #SPINNER
+            text: '{}'.format(icon('ion-load-b',80))
+            size_hint: 1,1
+            markup: True
+            p: 0
+            id: loading
+            canvas:
+               Clear
+               PushMatrix:
+               Rotate:
+                  angle: -self.p
+                  origin: self.center_x, self.center_y
+               Rectangle:
+                  size: (50,50)
+                  pos: self.center_x -4, self.center_y -4
+                  #source: 'icons/olivine.png'
+                  texture: self.texture
+               PopMatrix
+               
+      Button:
+         text: 'dismiss'
+         background_normal: 'icons/olivine.png'
+         size_hint: 1,.2
+         on_release:
+            root.dismiss()               
+      

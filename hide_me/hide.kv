@@ -1,0 +1,67 @@
+#: import icon myne.iconfonts.icon
+<Manager>:
+   Home:
+      id: home
+   HidePage:
+      id: hidepage
+   Recover:
+      id: recover
+
+
+<Home>:
+   name: 'home'
+   GridLayout:
+      cols: 1
+      canvas.before:
+         Color:
+            rgba: 1,1,1,1
+         Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'icons/msugreen.png'       
+      RelativeLayout:          #TOP DESCRIPTION  30 Percent
+         height: self.parent.height * .3
+         size_hint_y: None
+         Image:
+            source: "icons/icon.png"
+            size_hint: .3,.8
+            pos_hint: {'top': .8, 'right':.3}
+         Label:
+            text: 'Stegano[color=#007aa5]graphy[/color] Implementation'#\nHiding in plain sight'
+            font_size: self.height * .22
+            padding: 10,0
+            size_hint: .7,1
+            pos_hint: {'top':1, 'right': 1}
+            markup: True
+            text_size: self.size
+            valign: 'middle'
+            halign: 'left'
+
+      RelativeLayout:   #OPTIONS 
+         height: root.height * .7
+         size_hint_y: None
+
+         Page:         # Hide files  screen
+            size_hint: .9, .3
+            pos_hint: {'top': .8, 'center_x': .5}
+            on_release:
+               app.root.current = 'hidepage'
+         Page:         #RECOVER HIDDEN FILES
+            txt: 'Recover Hidden files'
+            size_hint: .9, .3
+            #pos_hint: {'top': .65, 'center_x': .5}
+            pos_hint: {'top': .45, 'center_x': .5}     
+            on_release:
+               app.root.current = 'recover' 
+       
+
+
+
+<Page>:
+   txt: 'Hide a file'
+   text: self.txt
+   font_size: self.height * .22
+   background_normal: 'icons/olivine.png'
+   valign: 'middle'
+   halign: 'center'         
+

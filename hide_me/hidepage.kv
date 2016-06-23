@@ -1,0 +1,215 @@
+<HidePage>:
+   name: 'hidepage'
+   options:options
+   filename: filename
+   files: files
+   on_pre_enter:
+      self.load_files()
+   #GridLayout:
+     # cols: 1
+   FloatLayout:
+      canvas.before:
+         Color:
+            rgba: 1,1,1,1
+         Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'icons/msugreen.png'       
+
+      BoxLayout:       # 10 PERCENT
+         height: self.parent.height * .1
+         orientation: 'horizontal'
+         size_hint_y: None
+         pos_hint: {'top': 1}
+         Button:
+            text: '{}  back'.format(icon('ion-android-arrow-back',38))
+            background_normal: 'icons/msugreen.png'
+            markup: True
+            size_hint: .2,1
+            font_size: self.height * .42
+            on_release:
+               app.root.transition.direction = 'right'
+               app.root.current='home'
+               root.files.clear_widgets()
+               root.close_option()
+         Label:
+            text: '[color=#bab86c]Hide your file[/color] '
+            size_hint: .8,1
+            markup: True
+            font_size: self.height *.45
+            size_hint: .8,1
+            text_size: self.size
+            padding: 10,12
+            halign: 'left'
+            #valign: 'middle'
+      RelativeLayout:       #MORE OPTIONS 10 percent
+         height: self.parent.height * .1
+         size_hint_y: None
+         pos_hint: {'top':.9}
+         Button:
+            text: 'FIND A FILE'
+            font_size: self.height * .3
+            size_hint: .2,1
+            #text_size: self.size
+            pos_hint: {'right': .25, 'top':1}
+            background_normal: "icons/msugreen.png"
+            on_release:
+               root.open_dialog()
+         Button:
+            text: 'OPEN FOLDER'
+            font_size: self.height * .3
+            size_hint: .2,1
+            #text_size: self.size
+            pos_hint: {'right': .5, 'top':1}
+            background_normal: "icons/msugreen.png"
+            on_release:
+               root.open_folder()
+         Button:
+            text: 'REFRESH LIST'
+            font_size: self.height * .3
+            size_hint: .2,1
+            #text_size: self.size
+            pos_hint: {'right': .75, 'top':1}
+            background_normal: "icons/msugreen.png"
+            on_release:
+               root.refresh()
+      ScrollView:
+         height: self.parent.height * .8
+         size_hint_y: None
+         pos_hint: {'top': .8}
+         canvas.before:
+            Color: 
+               rgba: 1,1,1,1
+            Rectangle:
+               pos: self.pos
+               size: self.size
+               source: 'icons/olivine.png'
+         GridLayout:   #AALLLL FILESSSSSS
+            cols: 1
+            id: files
+            height: self.minimum_height
+            size_hint_y: None
+ 
+
+      Options:   #SLIDES UP ON BUTTON CLICK
+         height: self.parent.height * .4
+         id: options
+         size_hint_y: None
+         pos_hint: {'top': 0}
+         RelativeLayout:
+            pos: self.parent.pos
+            size: self.parent.size
+            size_hint: None,None
+            Image:
+               source: "icons/word.png"
+               size_hint: .3,.8
+               pos_hint: {'top':1, 'right': .3}
+            Label:
+               text: "Mr Ronald's Medical Record"
+               id: filename
+               color: .29,.21,.13,1
+               font_size: self.height * .24
+               pos_hint: {'top': 1, 'right':1}
+               size_hint: .7,.8
+               text_size: self.size
+               halign: 'center'
+               valign: 'middle'
+            Button:
+               text: "{}".format(icon('ion-android-arrow-down', 38))
+               color: 1,1,1,1
+               size_hint: .2,.2
+               pos_hint: {'right':.2,'top': .2}
+               background_normal: 'icons/olivine.png'
+               markup: True
+               on_release:
+                  root.close_option()
+            Button:
+               text: "HIDE THIS FILE"
+               canvas.after:
+                  Color:
+                     rgba: .29,.21,.13,.1
+                  Rectangle:
+                     pos: self.x, self.top
+                     size: self.width, 2
+               font_size: self.height * .4
+               #color: 0,.3,.12,1
+               color: 0,.43,.35,1
+               size_hint: .2,.2
+               pos_hint: {'right':.7,'top': .2}
+               background_normal: 'icons/olivine.png'
+               markup: True
+               on_release:
+                  root.convert()
+            Button:
+               text: "DELETE FILE"
+               canvas.after:
+                  Color:
+                     rgba: .29,.21,.13,.1
+                  Rectangle:
+                     pos: self.x, self.top
+                     size: self.width, 2
+               font_size: self.height * .4
+               #color: 0,.3,.12,1
+               color: 0,.43,.35,1
+               size_hint: .2,.2
+               pos_hint: {'right':.97,'top': .2}
+               background_normal: 'icons/olivine.png'
+               markup: True
+               on_release:
+                  root.delete()
+               
+
+<Options>:
+   cols: 1
+   canvas.before:
+      Color:
+         rgba: 1,1,1,1
+      Rectangle:
+         pos: self.pos
+         size: self.size
+         source: 'icons/olivine.png'
+   canvas.after:
+      Color:
+         rgba: .29,.21,.13,.2
+      Rectangle:
+         pos: self.x, self.top
+         size: self.width, 1
+   
+      
+
+<Wordfile>:
+   text: ''
+   name:name
+   background_normal:('icons/olivine.png')
+   height: '90dp'
+   size_hint_y: None
+   on_release:
+      self.show_options()
+   canvas.after:
+      Color:
+         rgba: 1,1,1,1
+      Rectangle:
+         pos: self.width * .05, self.y
+         size: self.width * .7, 2
+         source: 'icons/msugreen.png'
+   RelativeLayout:
+      size: self.parent.width, self.parent.height
+      pos: self.parent.pos
+      size_hint: None, None
+      Image:
+         source: 'icons/word.png'
+         size_hint: .2,.8
+         pos_hint: {'center_y': .5, 'right': .2}
+      Label:
+         text: "Mr Ronald's Medical record"
+         id: name
+         font_size: self.height* .3
+         padding: 5,0
+         text_size: self.size
+         halign: 'center'
+         valign: 'middle'
+         size_hint: .7,.8
+         pos_hiint: {'center_y': .5, 'right': 1}
+         color: .29,.21,.13,1
+         #color: .65,.48,.01,1
+         #color: .11,.30,.17,1
